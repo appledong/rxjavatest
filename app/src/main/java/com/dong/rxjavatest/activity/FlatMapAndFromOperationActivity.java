@@ -19,6 +19,11 @@ import rx.functions.Func2;
 
 /**
  * Created by dongdz on 2016/2/23.
+ * from 操作符 o
+ * flatmap 操作符 o
+ * contactmap 操作符 x
+ * switchmap 操作符 x
+ * spit 操作符 x
  */
 public class FlatMapAndFromOperationActivity extends AppCompatActivity {
 
@@ -178,6 +183,18 @@ public class FlatMapAndFromOperationActivity extends AppCompatActivity {
                     });
                     Log.e("dongdianzhou7", "curent value：" + flatmapFunc2Bean.currnt);
                 }
+            }
+        });
+
+        getSerchUrls("").concatMap(new Func1<List<String>, Observable<String>>() {
+            @Override
+            public Observable<String> call(List<String> strings) {
+                return Observable.from(strings);
+            }
+        }).subscribe(new Action1<String>() {
+            @Override
+            public void call(String s) {
+                Log.e("dongdianzhou8",s);
             }
         });
 
