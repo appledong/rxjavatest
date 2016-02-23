@@ -1,0 +1,2 @@
+# rxjavatest
+rxjava的使用demo，会在不断的扩展中，一是自己对rxjava和rxAndroid的学习理解，二是和大家共同交流，增强对两个框架的理解
