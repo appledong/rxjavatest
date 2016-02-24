@@ -17,6 +17,8 @@ import rx.functions.Func1;
 
 /***
  * rxjava(响应式编程模式)
+ * 响应式编程：rxjava 和接口回调都是响应式编程模式，接口回调是observable和observe之间依赖于接口，observable通过接口调用observe的实现。
+ * rxjava是observable和observe通过subscribe串联起来，原理是一样的，rxjava强大地方是提供了很多的操作符和操作逻辑实现。
  */
 public class MainActivity extends AppCompatActivity {
 
@@ -24,10 +26,22 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ((TextView)findViewById(R.id.textview)).setOnClickListener(new View.OnClickListener() {
+        ((TextView) findViewById(R.id.textview_fromandflatmap)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this,FlatMapAndFromOperationActivity.class));
+                startActivity(new Intent(MainActivity.this, FlatMapAndFromOperationActivity.class));
+            }
+        });
+        ((TextView) findViewById(R.id.textview_logic)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, LogicObservableoperationActivity.class));
+            }
+        });
+        ((TextView) findViewById(R.id.textview_calculate)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, CalculateObservableOperationActivity.class));
             }
         });
         /**
@@ -45,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
          * 3. 自动生成的observable不会有逻辑处理
          * 4. just操作符生成的observable是一个完整的操作，包含onstart()和oncompelete()事件响应
          */
-        Observable.just("测试是哪一个操作","第二个String参数")
+        Observable.just("测试是哪一个操作", "第二个String参数")
                 .subscribe(new Action1<String>() {
                     @Override
                     public void call(String s) {
@@ -79,12 +93,12 @@ public class MainActivity extends AppCompatActivity {
          * observable响应onnext()事件后，响应的数据对象会先经过map的功能函数处理（可以多次处理），将处理后的数据给最终的观察者
          * 缺陷：map操作符在操作的过程中可以修改参数的类型，但是最终数据类型还是由subscribe决定的。
          */
-    myObservable.map(new Func1<String, String>() {
-        @Override
-        public String call(String s) {
-            return "3调用到这一步了" + s;
-        }
-    }).subscribe(subscriber3);
+        myObservable.map(new Func1<String, String>() {
+            @Override
+            public String call(String s) {
+                return "3调用到这一步了" + s;
+            }
+        }).subscribe(subscriber3);
     }
 
     /**

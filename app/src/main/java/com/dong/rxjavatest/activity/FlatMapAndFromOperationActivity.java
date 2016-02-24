@@ -3,7 +3,6 @@ package com.dong.rxjavatest.activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.widget.TextView;
 
 import com.dong.rxjavatest.R;
 import com.dong.rxjavatest.bean.FlatmapFunc2Bean;
@@ -14,12 +13,14 @@ import java.util.List;
 import rx.Observable;
 import rx.Subscriber;
 import rx.functions.Action1;
+import rx.functions.Func0;
 import rx.functions.Func1;
 import rx.functions.Func2;
 
 /**
  * Created by dongdz on 2016/2/23.
- * from 操作符 o
+ * from 操作符 o 将一组数据拆分并逐一发送observable
+ * just 操作符 o mainactivity里面有描述，原样发送observable
  * flatmap 操作符 o
  * contactmap 操作符 x
  * switchmap 操作符 x
@@ -30,8 +31,8 @@ public class FlatMapAndFromOperationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        ((TextView) findViewById(R.id.textview)).setText("RxJava 操作符");
+        setContentView(R.layout.activity_flatandfrom);
+//        ((TextView) findViewById(R.id.textview)).setText("RxJava from and flatmap操作符");
         /**
          * 一个rxjava的简单实例的使用：提供通过key获取一组数据并展示出来
          * 使用：observable创建并准备数据和处理subscribe的回调。
@@ -81,6 +82,10 @@ public class FlatMapAndFromOperationActivity extends AppCompatActivity {
          * from()操作符有五个重载的api，当前接触到的最简单的2种一个是输入一个对象列表输出一个单独的对象
          * 另外屏蔽的一个是输入一个对象数组，输出一个单独的对象。
          * from()针对的对象是list，String[],没有特殊的限制。
+         * from(Future):
+         * from(Future,timeout,timeunit):
+         * from(Future,timeout,timeunit,Scheduler):
+         * Future 是Java线程中的一个utils类和rxjava关系不大，了解上面三个需要先了解Java并发编程中的Future
          */
         getSerchUrls("").map(new Func1<List<String>, List<String>>() {
             @Override
@@ -223,6 +228,17 @@ public class FlatMapAndFromOperationActivity extends AppCompatActivity {
      * @return
      */
     private Observable<List<String>> getSerchUrls(String key) {
+        Observable.defer(new Func0<Observable<String>>() {
+            @Override
+            public Observable<String> call() {
+                return null;
+            }
+        }).subscribe(new Action1<String>() {
+            @Override
+            public void call(String s) {
+
+            }
+        });
         return Observable.create(new Observable.OnSubscribe<List<String>>() {
             @Override
             public void call(Subscriber<? super List<String>> subscriber) {
