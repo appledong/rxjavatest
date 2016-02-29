@@ -15,11 +15,28 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="逻辑型创建Observable操作符"
-        android:layout_marginTop="5dp"/>
+        android:layout_marginTop="15dp"/>
     <TextView
         android:id="@+id/textview_calculate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="计算型创建Observable操作符"
-        android:layout_marginTop="5dp"/>
+        android:layout_marginTop="15dp"/>
+    <TextView
+        android:id="@+id/textview_shcedule"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Schedules的使用"
+        android:layout_marginTop="15dp"/>
+    <TextView
+        android:id="@+id/textview_buffer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="buffer操作符的使用"
+        android:layout_marginTop="15dp"/>
+    <TextView
+        android:id="@+id/textview_groupby"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="groupby操作符的使用"/>
 </LinearLayout>

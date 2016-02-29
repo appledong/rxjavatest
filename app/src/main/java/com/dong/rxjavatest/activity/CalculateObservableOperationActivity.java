@@ -9,6 +9,8 @@ import com.dong.rxjavatest.R;
 import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
+import rx.Subscriber;
+import rx.Subscription;
 import rx.functions.Action1;
 
 /**
@@ -21,6 +23,20 @@ import rx.functions.Action1;
  * Repeat和Start的细节需要在研究。
  */
 public class CalculateObservableOperationActivity extends AppCompatActivity {
+
+    private Subscription intervalSubscriber1;
+    private Subscription intervalSubscriber2;
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(intervalSubscriber1 != null && !intervalSubscriber1.isUnsubscribed()){
+            intervalSubscriber1.unsubscribe();
+        }
+        if(intervalSubscriber2 != null && !intervalSubscriber2.isUnsubscribed()){
+            intervalSubscriber2.unsubscribe();
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,17 +51,17 @@ public class CalculateObservableOperationActivity extends AppCompatActivity {
          *  缺陷：不能指定整型值的最大值(默认的是长整型long的最大值)
          *  不能指定整形值自增还是自减
          */
-        Observable.interval(1, TimeUnit.SECONDS).subscribe(new Action1<Long>() {
+        intervalSubscriber1 = Observable.interval(1, TimeUnit.SECONDS).subscribe(new Action1<Long>() {
             @Override
             public void call(Long aLong) {
                 Log.e("dongdianzhou1", "当前发射出来的数字是：" + aLong);
             }
         });
-        Observable.interval(2, 1, TimeUnit.SECONDS).subscribe(new Action1<Long>() {
-            @Override
-            public void call(Long aLong) {
-                Log.e("dongdianzhou2", "当前发射出来的数字是：" + aLong);
-            }
+        intervalSubscriber2 = Observable.interval(2, 1, TimeUnit.SECONDS).subscribe(new Action1<Long>() {
+                    @Override
+                    public void call(Long aLong) {
+                        Log.e("dongdianzhou2", "当前发射出来的数字是：" + aLong);
+                    }
         });
 
         /**

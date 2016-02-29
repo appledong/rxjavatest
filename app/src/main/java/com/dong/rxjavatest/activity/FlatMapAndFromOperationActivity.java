@@ -86,6 +86,7 @@ public class FlatMapAndFromOperationActivity extends AppCompatActivity {
          * from(Future,timeout,timeunit):
          * from(Future,timeout,timeunit,Scheduler):
          * Future 是Java线程中的一个utils类和rxjava关系不大，了解上面三个需要先了解Java并发编程中的Future
+         * 参考文档：http://www.oschina.net/question/54100_83333
          */
         getSerchUrls("").map(new Func1<List<String>, List<String>>() {
             @Override

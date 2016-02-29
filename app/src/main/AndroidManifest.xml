@@ -23,6 +23,12 @@
                   android:screenOrientation="portrait"/>
         <activity android:name=".activity.CalculateObservableOperationActivity"
                   android:screenOrientation="portrait"/>
+        <activity android:name=".activity.SchedulerActivity"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".activity.BufferActivity"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".activity.GroupByActivity"
+                  android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

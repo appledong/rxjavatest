@@ -44,6 +44,24 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, CalculateObservableOperationActivity.class));
             }
         });
+        ((TextView) findViewById(R.id.textview_shcedule)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, SchedulerActivity.class));
+            }
+        });
+        ((TextView) findViewById(R.id.textview_buffer)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, BufferActivity.class));
+            }
+        });
+        ((TextView) findViewById(R.id.textview_groupby)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, GroupByActivity.class));
+            }
+        });
         /**
          * 1.subscribe api可以直接接受一个订阅者（subscribe）
          * 2.subscribe有三个重载action的api，单个next action，next，error action
