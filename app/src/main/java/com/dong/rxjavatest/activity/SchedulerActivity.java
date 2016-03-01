@@ -7,10 +7,15 @@ import android.widget.TextView;
 
 import com.dong.rxjavatest.R;
 
+import java.util.concurrent.TimeUnit;
+
 import rx.Observable;
+import rx.Scheduler;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action0;
 import rx.functions.Action1;
+import rx.functions.Func0;
 import rx.schedulers.Schedulers;
 
 /**
@@ -23,33 +28,60 @@ import rx.schedulers.Schedulers;
  */
 public class SchedulerActivity extends AppCompatActivity {
 
+    private int count = 60;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scheduleoperation);
         final TextView textview_scheduler = (TextView) findViewById(R.id.textview_scheduler);
-        Observable observable1 = Observable.create(new Observable.OnSubscribe<String>() {
+        /***
+         * 特别注意：
+         * observeOn()和SuscribOn()两个决定的逻辑和其api名字没有任何鸟关系
+         * observeOn()决定了subscribe的逻辑线程
+         * subscribeOn决定了observable的逻辑线程，两个反了个
+         */
+        Observable observable1 = Observable.defer(new Func0<Observable<String>>() {
             @Override
-            public void call(Subscriber<? super String> subscriber) {
-//                Log.e("dongdianzhou1", "SchedulerActivity:" + "开始执行observablecall命令了" + System.currentTimeMillis());
+            public Observable<String> call() {
+                Log.e("dongdianzhou1", "SchedulerActivity:" + "当前的observable线程是：" + Thread.currentThread());
                 int count = 0;
                 for (int i = 0; i < 10000; i++) {
 //                    Log.e("dongdianzhou","当前的i是：" + i);
                     count++;
                 }
-                subscriber.onNext(count + "");
-                subscriber.onCompleted();
+                return Observable.just(count + "");
             }
-        })
-                .observeOn(Schedulers.io())
-                .subscribeOn(AndroidSchedulers.mainThread());
-//        Log.e("dongdianzhou1", "SchedulerActivity:" + "开始提交一个subscribe了" + System.currentTimeMillis());
+        }).observeOn(AndroidSchedulers.mainThread())//subscribe逻辑执行的线程
+                .subscribeOn(Schedulers.computation());//observable逻辑执行的线程
+        Log.e("dongdianzhou1", "SchedulerActivity:" + "当前的UI线程是：" + Thread.currentThread());
         observable1.subscribe(new Action1<String>() {
             @Override
             public void call(String s) {
-                Log.e("dongdianzhou1", "SchedulerActivity:" + "开始执行Subscribecall命令了" + System.currentTimeMillis());
+                Log.e("dongdianzhou1", "SchedulerActivity:" + "当前的subscribe线程是：" + Thread.currentThread() + " S:" + s);
                 textview_scheduler.setText("数据处理后的结果是：" + s);
             }
         });
+        /**
+         * rxjava提供了worker的概念，可以利用此特性很方便的把自己的逻辑放到不同的线程里去
+         */
+        final TextView textview_worker = (TextView) findViewById(R.id.textview_worker);
+        final Scheduler.Worker worker = AndroidSchedulers.mainThread().createWorker();
+        worker.schedulePeriodically(new Action0() {
+            @Override
+            public void call() {
+                if (!worker.isUnsubscribed()) {
+                    if (isFinishing()) {
+                        worker.unsubscribe();
+                    } else {
+                        textview_worker.setText(count + "s");
+                        count--;
+                        if (count < 0) {
+                            count = 60;
+                        }
+                    }
+                }
+            }
+        }, 0, 1, TimeUnit.SECONDS);
     }
 }
