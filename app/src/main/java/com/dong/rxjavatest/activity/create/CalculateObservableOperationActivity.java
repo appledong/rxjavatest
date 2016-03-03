@@ -1,4 +1,4 @@
-package com.dong.rxjavatest.activity;
+package com.dong.rxjavatest.activity.create;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;

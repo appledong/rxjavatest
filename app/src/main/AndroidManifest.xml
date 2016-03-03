@@ -17,17 +17,19 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".activity.FlatMapAndFromOperationActivity"
+        <activity android:name=".activity.change.FlatMapAndFromOperationActivity"
                   android:screenOrientation="portrait"/>
-        <activity android:name=".activity.LogicObservableoperationActivity"
+        <activity android:name=".activity.create.LogicObservableoperationActivity"
                   android:screenOrientation="portrait"/>
-        <activity android:name=".activity.CalculateObservableOperationActivity"
+        <activity android:name=".activity.create.CalculateObservableOperationActivity"
                   android:screenOrientation="portrait"/>
-        <activity android:name=".activity.SchedulerActivity"
+        <activity android:name=".activity.thread.SchedulerActivity"
                   android:screenOrientation="portrait"/>
-        <activity android:name=".activity.BufferActivity"
+        <activity android:name=".activity.change.BufferActivity"
                   android:screenOrientation="portrait"/>
-        <activity android:name=".activity.GroupByActivity"
+        <activity android:name=".activity.change.GroupByActivity"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".activity.CommonActivity"
                   android:screenOrientation="portrait"/>
     </application>
 

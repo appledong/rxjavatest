@@ -3,40 +3,79 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginTop="15dp"
+    android:gravity="center_horizontal"
     android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textview_common"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="rxjava的基本用法"/>
+
+    <TextView
+        android:id="@+id/textview_shcedule"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="Schedules的使用"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="--------------  rxjavaobservable创建操作符的使用  -------------"/>
+
+    <TextView
+        android:id="@+id/textview_logic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="逻辑型创建Observable操作符"/>
+
+    <TextView
+        android:id="@+id/textview_calculate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="计算型创建Observable操作符"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="--------------  rxjavaobservable创建操作符的使用  -------------"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="--------------  rxjavaobservable转换操作符的使用  -------------"/>
 
     <TextView
         android:id="@+id/textview_fromandflatmap"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="fromandflatmap操作符"/>
-    <TextView
-        android:id="@+id/textview_logic"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="逻辑型创建Observable操作符"
+        android:text="fromandflatmap操作符"
         android:layout_marginTop="15dp"/>
-    <TextView
-        android:id="@+id/textview_calculate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="计算型创建Observable操作符"
-        android:layout_marginTop="15dp"/>
-    <TextView
-        android:id="@+id/textview_shcedule"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Schedules的使用"
-        android:layout_marginTop="15dp"/>
+
     <TextView
         android:id="@+id/textview_buffer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="buffer操作符的使用"
-        android:layout_marginTop="15dp"/>
+        android:layout_marginTop="15dp"
+        android:text="buffer操作符的使用"/>
+
     <TextView
         android:id="@+id/textview_groupby"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="groupby操作符的使用"/>
+        android:text="groupby操作符的使用"
+        android:layout_marginTop="15dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="--------------  rxjavaobservable转换操作符的使用  -------------"/>
 </LinearLayout>

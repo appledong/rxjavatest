@@ -1,4 +1,4 @@
-package com.dong.rxjavatest.activity;
+package com.dong.rxjavatest.activity.thread;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -6,7 +6,9 @@ import android.util.Log;
 import android.widget.TextView;
 
 import com.dong.rxjavatest.R;
+import com.dong.rxjavatest.bean.Cat;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
@@ -16,6 +18,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action0;
 import rx.functions.Action1;
 import rx.functions.Func0;
+import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -83,5 +86,35 @@ public class SchedulerActivity extends AppCompatActivity {
                 }
             }
         }, 0, 1, TimeUnit.SECONDS);
+        /**
+         * 结合文章写的一组伪代码优化逻辑代码
+         * 文章连接：http://www.devtf.cn/?p=323
+         */
+//        Observable.create(new Observable.OnSubscribe<List<Cat>>() {
+//            @Override
+//            public void call(Subscriber<? super List<Cat>> subscriber) {
+////                getAllCatsFromNet();
+//            }
+//        }).subscribeOn(Schedulers.io())
+//                .map(new Func1<List<Cat>, Cat>() {
+//                    @Override
+//                    public Cat call(List<Cat> cats) {
+//                        Cat cat = null;
+////                        cat = findMoreNiceCat(cats);
+//                        return cat;
+//                    }
+//                }).subscribeOn(Schedulers.computation())
+//                .observeOn(Schedulers.io())
+//                .subscribe(new Action1<Cat>() {
+//                    @Override
+//                    public void call(Cat cat) {
+////                        saveToLocal(cat);
+//                    }
+//                }, new Action1<Throwable>() {
+//                    @Override
+//                    public void call(Throwable throwable) {
+//                        //？？？？？
+//                    }
+//                });
     }
 }

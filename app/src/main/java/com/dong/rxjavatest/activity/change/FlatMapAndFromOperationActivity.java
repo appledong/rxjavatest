@@ -1,4 +1,4 @@
-package com.dong.rxjavatest.activity;
+package com.dong.rxjavatest.activity.change;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -19,8 +19,7 @@ import rx.functions.Func2;
 
 /**
  * Created by dongdz on 2016/2/23.
- * from 操作符 o 将一组数据拆分并逐一发送observable
- * just 操作符 o mainactivity里面有描述，原样发送observable
+ * map 操作符 o 接受一个observable数据转换后返回另一个observable
  * flatmap 操作符 o
  * contactmap 操作符 x
  * switchmap 操作符 x
@@ -79,35 +78,30 @@ public class FlatMapAndFromOperationActivity extends AppCompatActivity {
             }
         });
         /**
-         * from()操作符有五个重载的api，当前接触到的最简单的2种一个是输入一个对象列表输出一个单独的对象
-         * 另外屏蔽的一个是输入一个对象数组，输出一个单独的对象。
-         * from()针对的对象是list，String[],没有特殊的限制。
-         * from(Future):
-         * from(Future,timeout,timeunit):
-         * from(Future,timeout,timeunit,Scheduler):
-         * Future 是Java线程中的一个utils类和rxjava关系不大，了解上面三个需要先了解Java并发编程中的Future
-         * 参考文档：http://www.oschina.net/question/54100_83333
+         * map操作符的使用
+         * 对于subscribe来说，observable返回的数据不一定就是自己最终需要的数据，
+         * 此时修改被观察者不好不一定有一个观察者（在observable里面逻辑控制会导致逻辑很乱），
+         * 在观察者里面修改也不好观察者的逻辑越轻量越好（代码逻辑有可能很复杂）。
+         * map操作符实现了被观察者和观察者之间修改数据最终给观察者的实现。
+         * func1：单个参数的功能接口，两个泛型参数，第一个是observable处理后的结果，第二个泛型是当前map处理后返回的数据类型。
+         * observable响应onnext()事件后，响应的数据对象会先经过map的功能函数处理（可以多次处理），将处理后的数据给最终的观察者
+         * 缺陷：map操作符在操作的过程中可以修改参数的类型，但是最终数据类型还是由subscribe决定的。
          */
-        getSerchUrls("").map(new Func1<List<String>, List<String>>() {
+        Observable.create(new Observable.OnSubscribe<String>() {
             @Override
-            public List<String> call(List<String> strings) {
-                List<String> list = new ArrayList<String>();
-                for (String string : strings) {
-                    string += "?userid=\"\"";
-                    list.add(string);
-                }
-                return list;
+            public void call(Subscriber<? super String> subscriber) {
+                subscriber.onNext("测试map");
+                subscriber.onCompleted();
             }
-        }).subscribe(new Action1<List<String>>() {
+        }).map(new Func1<String, String>() {
             @Override
-            public void call(List<String> strings) {
-//                Observable.from(T[],arrays);
-                Observable.from(strings).subscribe(new Action1<String>() {
-                    @Override
-                    public void call(String url) {
-                        Log.e("dongdianzhou3", url);
-                    }
-                });
+            public String call(String s) {
+                return "3调用到这一步了" + s;
+            }
+        }).subscribe(new Action1<String>() {
+            @Override
+            public void call(String s) {
+                Log.e("dongdianzhou4", "打印出来的s：" + s);
             }
         });
         /**
@@ -229,17 +223,17 @@ public class FlatMapAndFromOperationActivity extends AppCompatActivity {
      * @return
      */
     private Observable<List<String>> getSerchUrls(String key) {
-        Observable.defer(new Func0<Observable<String>>() {
-            @Override
-            public Observable<String> call() {
-                return null;
-            }
-        }).subscribe(new Action1<String>() {
-            @Override
-            public void call(String s) {
-
-            }
-        });
+//        Observable.defer(new Func0<Observable<String>>() {
+//            @Override
+//            public Observable<String> call() {
+//                return null;
+//            }
+//        }).subscribe(new Action1<String>() {
+//            @Override
+//            public void call(String s) {
+//
+//            }
+//        });
         return Observable.create(new Observable.OnSubscribe<List<String>>() {
             @Override
             public void call(Subscriber<? super List<String>> subscriber) {
